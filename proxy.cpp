@@ -146,6 +146,8 @@ int main() {
 
 
 
+        
+
 
 
         if (bytes_received > 0) {
@@ -157,6 +159,16 @@ int main() {
 
 
             string request(buffer);
+
+
+
+        
+
+            if(request.substr(0, 3) != "GET"){
+
+                continue;
+
+            }
 
 
 
@@ -202,11 +214,13 @@ int main() {
 
                 char buffer2[4096] = {0};
 
+                string receivedData;
+
                 int bytesReceived2 = 0;
 
                 while ((bytesReceived2 = recv(server_socket, buffer2, 4096, 0)) > 0) {
 
-                    //std::cout.write(buffer2, bytesReceived2);
+                    receivedData.append(buffer2, bytesReceived2);
 
                 }
 
@@ -214,17 +228,17 @@ int main() {
 
 
 
-                string response(buffer2);
+                //string response(buffer2);
 
 
 
                 cout << endl;
 
-                cout <<response << endl;
+                cout <<receivedData << endl;
 
                 
 
-                if(send(client_socket, buffer2, sizeof(buffer2), 0) == -1){
+                if(send(client_socket, receivedData.c_str(), receivedData.size(), 0) == -1){
 
                     perror("Send back to client failed!");
 
