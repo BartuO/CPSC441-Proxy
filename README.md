@@ -4,7 +4,7 @@ Name: Bartu Okan
 
 This program acts as the middleman between the client and the server, creating a proxy for HTTP protocols.
 When it is run and connection is routed through localhost:80, it will modify the responses from the servers, changing every word "frog" into "Fred" and replace all images with extension ".jpg" to a set image.
-It was tested and can be run on linux machines using the command line.
+It was tested on a linux virtual machine and can be run on linux machines using the command line.
 
 To Compile: g++ -o proxy proxy.cpp
 To Run: ./proxy
