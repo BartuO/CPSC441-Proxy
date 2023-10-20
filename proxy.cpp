@@ -48,7 +48,7 @@ int main() {
     }
 
     //Socket starts to listen for connections
-    if (listen(server_fd, 3) < 0) {
+    if (listen(server_fd, 10) < 0) {
         perror("Listen failed");
         exit(EXIT_FAILURE);
     }
@@ -152,19 +152,24 @@ int main() {
                     frog_pos += 4;
                 }
 
-
-
+                content_pos = receivedData.find("\r\n\r\n");
                 size_t jpg_pos = content_pos;
 
                 //Parses the string to change the .jpg links to the "frogue.jpg" 
-                while((jpg_pos = lowerData.find(".jpg", jpg_pos)) != string::npos){
+                while((jpg_pos = receivedData.find(".jpg", jpg_pos)) != string::npos){
                     
                     size_t start_pos = receivedData.rfind("\"", jpg_pos);
-                    string frogue = "http://pages.cpsc.ucalgary.ca/~jcleahy/Frogue.jpg\" ";
-                    receivedData.replace(start_pos + 1, jpg_pos - start_pos + 5, frogue);
 
-                    jpg_pos += start_pos + frogue.length();
-                }
+           
+
+                    string frogue = "http://pages.cpsc.ucalgary.ca/~jcleahy/Frogue.jpg\" ";
+                    receivedData.replace(start_pos + 1, jpg_pos - start_pos + 4, frogue);
+
+                    jpg_pos = start_pos + frogue.length();
+
+                }   
+
+                
 
                 //cout << endl;
                 //cout <<receivedData << endl; // For debugging purposes
